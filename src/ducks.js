@@ -24,7 +24,7 @@ export let actions = {
       type: actionTypes.CLOSE
     };
   },
-  setModalVisibility(actionProps, { type, ...triggerAction } = {}) {
+  setVisibility(actionProps, { type, ...triggerAction } = {}) {
     return {
       ...actionProps,
       triggerAction,
@@ -33,7 +33,7 @@ export let actions = {
   }
 };
 
-export let modalHandlerMiddleware = reducerKey => store => next => action => {
+export let snitchMiddleware = reducerKey => store => next => action => {
   let result = next(action);
   if (action.type.startsWith("[Snitch]")) {
     return result;
@@ -45,12 +45,12 @@ export let modalHandlerMiddleware = reducerKey => store => next => action => {
         actionType === action.type && (updateWhen(action) || snitch === 0)
     )
     .forEach(listenAction =>
-      store.dispatch(actions.setModalVisibility(listenAction, action))
+      store.dispatch(actions.setVisibility(listenAction, action))
     );
   return result;
 };
 
-export let modalHandlerReducer = (state = initialState, action) => {
+export let snitchReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.OPEN: {
       let { opensOn = [], closesOn = [], key, updateWhen = _ => true } = action;

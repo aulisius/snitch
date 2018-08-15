@@ -1,6 +1,6 @@
 {
   "name": "@faizaanceg/snitch",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Snitch - Control visibility of your views",
   "main": "lib/index.cjs.js",
   "module": "lib/es/snitch.js",
@@ -60,5 +60,9 @@
     "uglify-es": "^3.3.9"
   },
   "dependencies": {},
+  "files": [
+    "lib/",
+    "README.md"
+  ],
   "license": "MIT"
 }

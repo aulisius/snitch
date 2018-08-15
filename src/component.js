@@ -41,7 +41,7 @@ export class Snitch extends Component {
         show: isVisible,
         onOpen: () => {
           this.props.dispatch(
-            actions.setModalVisibility({
+            actions.setVisibility({
               key: this.key,
               snitch: 1
             })
@@ -50,7 +50,7 @@ export class Snitch extends Component {
         },
         onHide: () => {
           this.props.dispatch(
-            actions.setModalVisibility({
+            actions.setVisibility({
               key: this.key,
               snitch: 0
             })

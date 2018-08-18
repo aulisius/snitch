@@ -5,7 +5,7 @@ _I open and close_
 - [Snitch](#snitch)
   - [The Problem](#the-problem)
   - [Installation](#installation)
-  - [Basic Example](#basic-example)
+  - [Examples](#examples)
   - [Basic code snippet](#basic-code-snippet)
   - [License](#license)
   - [TODO](#todo)
@@ -25,7 +25,10 @@ After awhile, requirements come in. You now have more modals. Lots of them. `sho
 npm install @faizaanceg/snitch --save
 ```
 
-## [Basic Example](https://codesandbox.io/s/4w374z5wmw)
+## Examples
+
+- [Basic Example](https://codesandbox.io/s/4w374z5wmw)
+- [Example with react-bootstrap](https://codesandbox.io/s/qvxxyny3jw)
 
 ## Basic code snippet
 
@@ -33,7 +36,7 @@ npm install @faizaanceg/snitch --save
 <Snitch
   opensOn={actionTypes.AUTH_SUCCESS}
   closesOn={actionTypes.AUTH_FAILURE}
-  render={({ show }) => (show ? "Welcome mate!" : "Access denied")}
+  render={({ show }) => (show ? <Dashboard /> : <AccessDenied />)}
 />
 ```
 
@@ -43,10 +46,10 @@ MIT
 
 ## TODO
 
-- Add complete documentation
-- Add Typescript and Flow definitions
-- Add more non-trivial examples
-- Write tests (and achieve optimum coverage)
+- [ ] Add complete documentation
+- [ ] Add Typescript and Flow definitions
+- [ ] Add more non-trivial examples
+- [ ] Write tests (and achieve optimum coverage)
 
 ## Contributing
 

@@ -5,8 +5,8 @@ _I open and close_
 - [Snitch](#snitch)
   - [The Problem](#the-problem)
   - [Installation](#installation)
-  - [Examples](#examples)
   - [Basic code snippet](#basic-code-snippet)
+  - [Examples](#examples)
   - [License](#license)
   - [TODO](#todo)
   - [Contributing](#contributing)
@@ -25,11 +25,6 @@ After awhile, requirements come in. You now have more modals. Lots of them. `sho
 npm install @faizaanceg/snitch --save
 ```
 
-## Examples
-
-- [Basic Example](https://codesandbox.io/s/4w374z5wmw)
-- [Example with react-bootstrap](https://codesandbox.io/s/qvxxyny3jw)
-
 ## Basic code snippet
 
 ```js
@@ -39,6 +34,13 @@ npm install @faizaanceg/snitch --save
   render={({ show }) => (show ? <Dashboard /> : <AccessDenied />)}
 />
 ```
+
+## Examples
+
+You can check out the `examples` directory to see how you can use this library. Below is a list of similar examples but available interactively in `CodeSandbox`.
+
+- [Basic Example](https://codesandbox.io/s/4w374z5wmw)
+- [Example with react-bootstrap](https://codesandbox.io/s/qvxxyny3jw)
 
 ## License
 

@@ -53,7 +53,7 @@ export let snitchMiddleware = reducerKey => store => next => action => {
 export let snitchReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.OPEN: {
-      let { opensOn = [], closesOn = [], key, updateWhen = _ => true } = action;
+      let { opensOn = [], closesOn = [], key, updateWhen } = action;
       return {
         ...state,
         listeningTo: [

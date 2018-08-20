@@ -5,7 +5,7 @@ import { actions, snitchState } from "./ducks";
 export class Snitch extends Component {
   constructor(props) {
     super(props);
-    this.key = Symbol(this.props.id);
+    this.key = Symbol();
   }
 
   componentDidMount() {
@@ -32,14 +32,13 @@ export class Snitch extends Component {
         [this.key]: { isVisible, triggerAction } = snitchState
       },
       render,
-      children = render,
-      onHide,
+      onClose,
       onOpen
     } = this.props;
-    return children(
+    return render(
       {
         show: isVisible,
-        onOpen: () => {
+        openView: () => {
           this.props.dispatch(
             actions.setVisibility({
               key: this.key,
@@ -48,14 +47,14 @@ export class Snitch extends Component {
           );
           onOpen(triggerAction);
         },
-        onHide: () => {
+        closeView: () => {
           this.props.dispatch(
             actions.setVisibility({
               key: this.key,
               snitch: 0
             })
           );
-          onHide(triggerAction);
+          onClose(triggerAction);
         }
       },
       triggerAction
@@ -64,20 +63,17 @@ export class Snitch extends Component {
 }
 
 Snitch.propTypes = {
-  children: PropTypes.func,
   closesOn: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
-  id: PropTypes.string,
-  onHide: PropTypes.func,
+  dispatch: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
   onOpen: PropTypes.func,
   opensOn: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired,
-  render: PropTypes.func,
-  dispatch: PropTypes.func.isRequired,
-  updateWhen: PropTypes.func,
-  visibilityById: PropTypes.object
+  render: PropTypes.func.isRequired,
+  visibilityById: PropTypes.object.isRequired
 };
 
 Snitch.defaultProps = {
-  id: "snitch",
-  onHide: _ => _,
-  onOpen: _ => _
+  onClose: _ => _,
+  onOpen: _ => _,
+  updateWhen: _ => true
 };

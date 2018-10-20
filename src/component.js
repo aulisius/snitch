@@ -6,6 +6,7 @@ export class Snitch extends Component {
   constructor(props) {
     super(props);
     this.key = Symbol();
+    this.setVisibility = this.setVisibility.bind(this);
   }
 
   componentDidMount() {
@@ -26,54 +27,47 @@ export class Snitch extends Component {
     );
   }
 
+  setVisibility(_) {
+    this.props.dispatch(
+      actions.setVisibility(
+        {
+          key: this.key,
+          snitch: _
+        },
+        {}
+      )
+    );
+  }
+
   render() {
     let {
-      visibilityById: {
-        [this.key]: { isVisible, triggerAction } = snitchState
-      },
-      render,
-      onClose,
-      onOpen
+      visibilityById: { [this.key]: state = snitchState },
+      render
     } = this.props;
     return render(
       {
-        show: isVisible,
-        openView: () => {
-          this.props.dispatch(
-            actions.setVisibility({
-              key: this.key,
-              snitch: 1
-            })
-          );
-          onOpen(triggerAction);
-        },
-        closeView: () => {
-          this.props.dispatch(
-            actions.setVisibility({
-              key: this.key,
-              snitch: 0
-            })
-          );
-          onClose(triggerAction);
-        }
+        show: state.isVisible,
+        open: _ => this.setVisibility(1),
+        close: _ => this.setVisibility(0)
       },
-      triggerAction
+      state.triggerAction
     );
   }
 }
 
 Snitch.propTypes = {
   closesOn: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  closesWhen: PropTypes.func,
   dispatch: PropTypes.func.isRequired,
-  onClose: PropTypes.func,
-  onOpen: PropTypes.func,
-  opensOn: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired,
+  opensOn: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  opensWhen: PropTypes.func,
   render: PropTypes.func.isRequired,
   visibilityById: PropTypes.object.isRequired
 };
 
 Snitch.defaultProps = {
-  onClose: _ => _,
-  onOpen: _ => _,
-  updateWhen: _ => true
+  closesOn: [],
+  closesWhen: _ => true,
+  opensOn: [],
+  opensWhen: _ => true
 };

@@ -4,6 +4,7 @@
   "description": "Snitch - Control visibility of your views",
   "main": "lib/cjs.js",
   "module": "lib/es.js",
+  "source": "src/index.js",
   "scripts": {
     "prebuild": "rimraf lib",
     "build": "rollup -c",
@@ -22,9 +23,6 @@
     "react-redux",
     "symbol"
   ],
-  "bugs": {
-    "url": "https://github.com/aulisius/snitch/issues"
-  },
   "homepage": "https://github.com/aulisius/snitch",
   "author": "Md Faizaan <aulisius7@gmail.com> (https://aulisi.us)",
   "peerDependencies": {
@@ -35,29 +33,23 @@
     "redux": ">= 3.1.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.0.0-rc.1",
-    "@babel/core": "7.0.0-rc.1",
-    "@babel/polyfill": "7.0.0-rc.1",
-    "@babel/preset-env": "7.0.0-rc.1",
-    "babel-eslint": "^8.2.6",
-    "babel-plugin-transform-react-remove-prop-types": "^0.4.14",
-    "eslint": "^5.3.0",
-    "eslint-config-prettier": "^3.0.1",
-    "eslint-plugin-babel": "^5.1.0",
-    "eslint-plugin-flowtype": "^2.50.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-prettier": "^2.6.2",
-    "eslint-plugin-promise": "^3.8.0",
+    "@babel/cli": "7.1.2",
+    "@babel/core": "7.1.2",
+    "@babel/polyfill": "7.0.0",
+    "@babel/preset-env": "7.1.0",
+    "babel-eslint": "^10.0.1",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.19",
+    "eslint": "^5.7.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-babel": "^5.2.1",
+    "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.11.1",
-    "prettier": "^1.14.2",
+    "prettier": "^1.14.3",
     "rimraf": "^2.6.2",
-    "rollup": "^0.64.1",
-    "rollup-plugin-babel": "^4.0.0-beta.8",
-    "rollup-plugin-commonjs": "^9.1.5",
-    "rollup-plugin-filesize": "^4.0.1"
-  },
-  "config": {
-    "source": "src/index.js"
+    "rollup": "^0.66.6",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-filesize": "^5.0.1"
   },
   "dependencies": {},
   "files": [

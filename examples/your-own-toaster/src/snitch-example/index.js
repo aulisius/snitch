@@ -5,21 +5,14 @@ class SnitchExample extends React.Component {
   render() {
     return (
       <Snitch
-        render={({ show, openView, closeView }) =>
+        render={({ show, open, close }) =>
           show ? (
             <React.Fragment>
-              <div>
-                {" "}
-                Hello from this side!{" "}
-                <button onClick={closeView}>Hide this!</button>
-              </div>
+              Hello from this side! <button onClick={close}>Hide this!</button>
             </React.Fragment>
           ) : (
             <React.Fragment>
-              <div>
-                Hello from that side!{" "}
-                <button onClick={openView}>Show that!</button>
-              </div>
+              Hello from that side! <button onClick={open}>Show that!</button>
             </React.Fragment>
           )
         }

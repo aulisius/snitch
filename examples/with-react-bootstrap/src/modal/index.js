@@ -8,8 +8,8 @@ export class MyModal extends React.Component {
     return (
       <Snitch
         opensOn={actionTypes.OPEN_MODAL}
-        render={({ show, closeView }) => (
-          <Modal show={show} onHide={closeView}>
+        render={({ show, close }) => (
+          <Modal show={show} onHide={close}>
             <Modal.Body>Yo, this modal is open now!</Modal.Body>
           </Modal>
         )}

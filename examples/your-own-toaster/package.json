@@ -1,28 +1,23 @@
 {
-  "name": "snitch-basic-example",
+  "name": "snitch-your-own-toaster",
   "version": "1.0.0",
   "description": "https://github.com/aulisius/snitch",
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
     "@faizaanceg/snitch": "file:../..",
-    "react": "16.5.2",
-    "react-dom": "16.5.2",
+    "bootstrap": "^4.1.3",
+    "react": "16.3.2",
+    "react-dom": "16.3.2",
     "react-redux": "5.0.7",
     "react-scripts": "1.1.4",
+    "reactstrap": "^6.4.0",
     "redux": "4.0.0"
   },
-  "devDependencies": {},
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  }
 }

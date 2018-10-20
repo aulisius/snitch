@@ -24,7 +24,7 @@ export let actions = {
       type: actionTypes.CLOSE
     };
   },
-  setVisibility(actionProps, { type, ...triggerAction } = {}) {
+  setVisibility(actionProps, triggerAction) {
     return {
       ...actionProps,
       triggerAction,
@@ -38,11 +38,11 @@ export let snitchMiddleware = reducerKey => store => next => action => {
   if (action.type.startsWith("[Snitch]")) {
     return result;
   }
-  let state = store.getState()[reducerKey];
-  state.listeningTo
-    .filter(
-      ({ actionType, snitch, updateWhen }) =>
-        actionType === action.type && (updateWhen(action) || snitch === 0)
+  store
+    .getState()
+    [reducerKey].listeningTo.filter(
+      ({ actionType, updateWhen }) =>
+        actionType === action.type && updateWhen(action)
     )
     .forEach(listenAction =>
       store.dispatch(actions.setVisibility(listenAction, action))
@@ -53,7 +53,7 @@ export let snitchMiddleware = reducerKey => store => next => action => {
 export let snitchReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.OPEN: {
-      let { opensOn = [], closesOn = [], key, updateWhen = _ => true } = action;
+      let { opensOn, closesOn, key, opensWhen, closesWhen } = action;
       return {
         ...state,
         listeningTo: [
@@ -62,13 +62,13 @@ export let snitchReducer = (state = initialState, action) => {
             snitch: 1,
             actionType,
             key,
-            updateWhen
+            updateWhen: opensWhen
           })),
           ...[].concat(closesOn).map(actionType => ({
             snitch: 0,
             actionType,
             key,
-            updateWhen
+            updateWhen: closesWhen
           }))
         ],
         visibilityById: {

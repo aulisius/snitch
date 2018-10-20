@@ -5,7 +5,8 @@ import { actions, snitchState } from "./ducks";
 export class Snitch extends Component {
   constructor(props) {
     super(props);
-    this.key = Symbol(this.props.id);
+    this.key = Symbol();
+    this.setVisibility = this.setVisibility.bind(this);
   }
 
   componentDidMount() {
@@ -26,58 +27,47 @@ export class Snitch extends Component {
     );
   }
 
+  setVisibility(_) {
+    this.props.dispatch(
+      actions.setVisibility(
+        {
+          key: this.key,
+          snitch: _
+        },
+        {}
+      )
+    );
+  }
+
   render() {
     let {
-      visibilityById: {
-        [this.key]: { isVisible, triggerAction } = snitchState
-      },
-      render,
-      children = render,
-      onHide,
-      onOpen
+      visibilityById: { [this.key]: state = snitchState },
+      render
     } = this.props;
-    return children(
+    return render(
       {
-        show: isVisible,
-        onOpen: () => {
-          this.props.dispatch(
-            actions.setVisibility({
-              key: this.key,
-              snitch: 1
-            })
-          );
-          onOpen(triggerAction);
-        },
-        onHide: () => {
-          this.props.dispatch(
-            actions.setVisibility({
-              key: this.key,
-              snitch: 0
-            })
-          );
-          onHide(triggerAction);
-        }
+        show: state.isVisible,
+        open: _ => this.setVisibility(1),
+        close: _ => this.setVisibility(0)
       },
-      triggerAction
+      state.triggerAction
     );
   }
 }
 
 Snitch.propTypes = {
-  children: PropTypes.func,
   closesOn: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
-  id: PropTypes.string,
-  onHide: PropTypes.func,
-  onOpen: PropTypes.func,
-  opensOn: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired,
-  render: PropTypes.func,
+  closesWhen: PropTypes.func,
   dispatch: PropTypes.func.isRequired,
-  updateWhen: PropTypes.func,
-  visibilityById: PropTypes.object
+  opensOn: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  opensWhen: PropTypes.func,
+  render: PropTypes.func.isRequired,
+  visibilityById: PropTypes.object.isRequired
 };
 
 Snitch.defaultProps = {
-  id: "snitch",
-  onHide: _ => _,
-  onOpen: _ => _
+  closesOn: [],
+  closesWhen: _ => true,
+  opensOn: [],
+  opensWhen: _ => true
 };

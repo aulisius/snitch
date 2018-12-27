@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Component } from "react";
-import { actions, snitchState } from "./ducks";
+import { actions } from "./ducks";
 
 export class Snitch extends Component {
   constructor(props) {
@@ -41,7 +41,12 @@ export class Snitch extends Component {
 
   render() {
     let {
-      visibilityById: { [this.key]: state = snitchState },
+      visibilityById: {
+        [this.key]: state = {
+          triggerAction: {},
+          isVisible: this.props.defaultOpen
+        }
+      },
       render
     } = this.props;
     return render(
@@ -58,6 +63,7 @@ export class Snitch extends Component {
 Snitch.propTypes = {
   closesOn: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   closesWhen: PropTypes.func,
+  defaultOpen: PropTypes.bool,
   dispatch: PropTypes.func.isRequired,
   opensOn: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   opensWhen: PropTypes.func,
@@ -68,6 +74,7 @@ Snitch.propTypes = {
 Snitch.defaultProps = {
   closesOn: [],
   closesWhen: _ => true,
+  defaultOpen: false,
   opensOn: [],
   opensWhen: _ => true
 };

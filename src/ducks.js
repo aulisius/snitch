@@ -4,8 +4,6 @@ let actionTypes = {
   TOGGLE: "[Snitch] Toggle"
 };
 
-export let snitchState = { isVisible: false, triggerAction: {} };
-
 let initialState = {
   listeningTo: [],
   visibilityById: {}
@@ -53,7 +51,14 @@ export let snitchMiddleware = reducerKey => store => next => action => {
 export let snitchReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.OPEN: {
-      let { opensOn, closesOn, key, opensWhen, closesWhen } = action;
+      let {
+        opensOn,
+        closesOn,
+        key,
+        opensWhen,
+        closesWhen,
+        defaultOpen
+      } = action;
       return {
         ...state,
         listeningTo: [
@@ -73,7 +78,7 @@ export let snitchReducer = (state = initialState, action) => {
         ],
         visibilityById: {
           ...state.visibilityById,
-          [key]: snitchState
+          [key]: { triggerAction: {}, isVisible: defaultOpen }
         }
       };
     }

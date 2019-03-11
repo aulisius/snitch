@@ -2,8 +2,8 @@
   "name": "@faizaanceg/snitch",
   "version": "1.1.0",
   "description": "Snitch - Control visibility of your views",
-  "main": "lib/cjs.js",
-  "module": "lib/es.js",
+  "main": "lib/snitch.cjs.js",
+  "module": "lib/snitch.es.js",
   "source": "src/index.js",
   "scripts": {
     "prebuild": "rimraf lib",

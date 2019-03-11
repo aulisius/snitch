@@ -15,14 +15,14 @@ Redux `connect`ed React component to toggle visibility of your views.
 
 ## The Problem
 
-You have a modal. You need to control its visibility. You maintain a value, lets say `showModal` either in your component state or in your redux store. It's cool. It works as intended.
+You have a view or a modal. You need to control its visibility. You maintain a value, lets say `showModal` either in your component state or in your redux store. It's cool. It works as intended.
 
 After awhile, requirements come in. You now have more modals. Lots of them. `showModal` isn't going to cut it. In comes this library, taking care of that problem. `Snitch` listens to `redux` actions and maintains the `showModal` state internally and lets you focus on rendering the necessary views.
 
 ## Installation
 
 ```bash
-npm install @faizaanceg/snitch --save
+npm install prop-types react react-dom react-redux redux @faizaanceg/snitch --save
 ```
 
 ## Basic code snippet

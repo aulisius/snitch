@@ -10,25 +10,13 @@ let initialState = {
 };
 
 export let actions = {
-  listen(actionProps) {
-    return {
-      ...actionProps,
-      type: actionTypes.OPEN
-    };
-  },
-  unlisten(actionProps) {
-    return {
-      ...actionProps,
-      type: actionTypes.CLOSE
-    };
-  },
-  setVisibility(actionProps, triggerAction) {
-    return {
-      ...actionProps,
-      triggerAction,
-      type: actionTypes.TOGGLE
-    };
-  }
+  listen: _ => ({ ..._, type: actionTypes.OPEN }),
+  unlisten: key => ({ key, type: actionTypes.CLOSE }),
+  setVisibility: (props, trigger) => ({
+    props,
+    trigger,
+    type: actionTypes.TOGGLE
+  })
 };
 
 export let snitchMiddleware = reducerKey => store => next => action => {
@@ -39,12 +27,9 @@ export let snitchMiddleware = reducerKey => store => next => action => {
   store
     .getState()
     [reducerKey].listeningTo.filter(
-      ({ actionType, updateWhen }) =>
-        actionType === action.type && updateWhen(action)
+      ([, , type, updateWhen]) => type === action.type && updateWhen(action)
     )
-    .forEach(listenAction =>
-      store.dispatch(actions.setVisibility(listenAction, action))
-    );
+    .forEach(_ => store.dispatch(actions.setVisibility(_, action)));
   return result;
 };
 
@@ -63,22 +48,12 @@ export let snitchReducer = (state = initialState, action) => {
         ...state,
         listeningTo: [
           ...state.listeningTo,
-          ...[].concat(opensOn).map(actionType => ({
-            snitch: 1,
-            actionType,
-            key,
-            updateWhen: opensWhen
-          })),
-          ...[].concat(closesOn).map(actionType => ({
-            snitch: 0,
-            actionType,
-            key,
-            updateWhen: closesWhen
-          }))
+          ...[].concat(opensOn).map(_ => [key, 1, _, opensWhen]),
+          ...[].concat(closesOn).map(_ => [key, 0, _, closesWhen])
         ],
         visibilityById: {
           ...state.visibilityById,
-          [key]: { triggerAction: {}, isVisible: defaultOpen }
+          [key]: { trigger: {}, isVisible: defaultOpen }
         }
       };
     }
@@ -86,9 +61,7 @@ export let snitchReducer = (state = initialState, action) => {
     case actionTypes.CLOSE: {
       return {
         ...state,
-        listeningTo: state.listeningTo.filter(
-          listenAction => listenAction.key !== action.key
-        ),
+        listeningTo: state.listeningTo.filter(([key]) => key !== action.key),
         visibilityById: {
           ...state.visibilityById,
           [action.key]: undefined
@@ -97,12 +70,15 @@ export let snitchReducer = (state = initialState, action) => {
     }
 
     case actionTypes.TOGGLE: {
-      let { snitch, key, triggerAction } = action;
+      let {
+        props: [key, snitch],
+        trigger
+      } = action;
       return {
         ...state,
         visibilityById: {
           ...state.visibilityById,
-          [key]: { isVisible: snitch === 1, triggerAction }
+          [key]: { isVisible: snitch === 1, trigger }
         }
       };
     }

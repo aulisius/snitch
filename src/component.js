@@ -1,63 +1,31 @@
 import PropTypes from "prop-types";
-import { Component } from "react";
+import { useEffect, useMemo } from "react";
 import { actions } from "./ducks";
 
-export class Snitch extends Component {
-  constructor(props) {
-    super(props);
-    this.key = Symbol();
-    this.setVisibility = this.setVisibility.bind(this);
-  }
+export function Snitch({ dispatch, render, ...props }) {
+  let key = useMemo(() => Symbol(), []);
 
-  componentDidMount() {
-    this.props.dispatch(
-      actions.listen({
-        ...this.props,
-        key: this.key
-      })
-    );
-  }
+  useEffect(() => {
+    dispatch(actions.listen({ ...props, key }));
+    return () => dispatch(actions.unlisten(key));
+  }, []);
+  let {
+    [key]: state = {
+      triggerAction: {},
+      isVisible: props.defaultOpen
+    }
+  } = props.visibilityById;
 
-  componentWillUnmount() {
-    this.props.dispatch(
-      actions.unlisten({
-        ...this.props,
-        key: this.key
-      })
-    );
-  }
+  let setVisibility = _ => dispatch(actions.setVisibility([key, _], {}));
 
-  setVisibility(_) {
-    this.props.dispatch(
-      actions.setVisibility(
-        {
-          key: this.key,
-          snitch: _
-        },
-        {}
-      )
-    );
-  }
-
-  render() {
-    let {
-      visibilityById: {
-        [this.key]: state = {
-          triggerAction: {},
-          isVisible: this.props.defaultOpen
-        }
-      },
-      render
-    } = this.props;
-    return render(
-      {
-        show: state.isVisible,
-        open: _ => this.setVisibility(1),
-        close: _ => this.setVisibility(0)
-      },
-      state.triggerAction
-    );
-  }
+  return render(
+    {
+      show: state.isVisible,
+      open: () => setVisibility(1),
+      close: () => setVisibility(0)
+    },
+    state.triggerAction
+  );
 }
 
 Snitch.propTypes = {
@@ -73,8 +41,8 @@ Snitch.propTypes = {
 
 Snitch.defaultProps = {
   closesOn: [],
-  closesWhen: _ => true,
+  closesWhen: () => true,
   defaultOpen: false,
   opensOn: [],
-  opensWhen: _ => true
+  opensWhen: () => true
 };

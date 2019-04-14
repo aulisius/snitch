@@ -1,6 +1,6 @@
 {
   "name": "@faizaanceg/snitch",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Snitch - Control visibility of your views",
   "main": "lib/snitch.cjs.js",
   "module": "lib/snitch.es.js",

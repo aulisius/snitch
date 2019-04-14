@@ -11,7 +11,7 @@ export function Snitch({ dispatch, render, ...props }) {
   }, []);
   let {
     [key]: state = {
-      triggerAction: {},
+      trigger: {},
       isVisible: props.defaultOpen
     }
   } = props.visibilityById;
@@ -24,7 +24,7 @@ export function Snitch({ dispatch, render, ...props }) {
       open: () => setVisibility(1),
       close: () => setVisibility(0)
     },
-    state.triggerAction
+    state.trigger
   );
 }
 

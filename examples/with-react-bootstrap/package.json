@@ -8,7 +8,7 @@
     "@faizaanceg/snitch": "file:../..",
     "react": "16.3.2",
     "react-bootstrap": "0.32.1",
-    "react-dom": "16.3.2",
+    "react-dom": "16.13.0",
     "react-redux": "5.0.7",
     "react-scripts": "1.1.4",
     "redux": "4.0.0",
